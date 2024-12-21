@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Volo.Abp.EntityFrameworkCore;
@@ -12,9 +13,11 @@ using YazilimAcademy.ABPRaffleApp.EntityFrameworkCore;
 namespace YazilimAcademy.ABPRaffleApp.Migrations
 {
     [DbContext(typeof(ABPRaffleAppDbContext))]
-    partial class ABPRaffleAppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241221134750_RaffleEntitiesCreated")]
+    partial class RaffleEntitiesCreated
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

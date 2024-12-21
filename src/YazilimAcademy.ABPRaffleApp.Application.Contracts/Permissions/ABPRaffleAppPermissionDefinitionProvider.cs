@@ -23,8 +23,11 @@ public class ABPRaffleAppPermissionDefinitionProvider : PermissionDefinitionProv
         rafflesPermission.AddChild(ABPRaffleAppPermissions.Raffles.Create, L("Permission:Raffles.Create"));
         rafflesPermission.AddChild(ABPRaffleAppPermissions.Raffles.Edit, L("Permission:Raffles.Edit"));
         rafflesPermission.AddChild(ABPRaffleAppPermissions.Raffles.Delete, L("Permission:Raffles.Delete"));
-        //Define your own permissions here. Example:
-        //myGroup.AddPermission(ABPRaffleAppPermissions.MyPermission1, L("Permission:MyPermission1"));
+
+        var participantsPermission = myGroup.AddPermission(ABPRaffleAppPermissions.Participants.Default, L("Permission:Participants"));
+        participantsPermission.AddChild(ABPRaffleAppPermissions.Participants.Create, L("Permission:Participants.Create"));
+        participantsPermission.AddChild(ABPRaffleAppPermissions.Participants.Edit, L("Permission:Participants.Edit"));
+        participantsPermission.AddChild(ABPRaffleAppPermissions.Participants.Delete, L("Permission:Participants.Delete"));
     }
 
     private static LocalizableString L(string name)
