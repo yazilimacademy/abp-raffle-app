@@ -1,5 +1,9 @@
 ﻿# YazilimAcademy.ABPRaffleApp
 
+## Database Diagram
+
+![Database Diagram](./docs/database-diagram.png)
+
 ## About this solution
 
 This is a layered startup solution based on [Domain Driven Design (DDD)](https://docs.abp.io/en/abp/latest/Domain-Driven-Design) practises. All the fundamental ABP modules are already installed. Check the [Application Startup Template](https://abp.io/docs/latest/startup-templates/application/index) documentation for more info.
@@ -59,3 +63,6 @@ You can see the following resources to learn more about your solution and the AB
 * [Application Startup Template](https://abp.io/docs/latest/startup-templates/application/index)
 * [LeptonX Theme Module](https://abp.io/docs/latest/themes/lepton-x/index)
 * [LeptonX Blazor UI](https://abp.io/docs/latest/themes/lepton-x/blazor?UI=Blazor)
+
+
+

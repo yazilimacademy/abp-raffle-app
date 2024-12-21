@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Volo.Abp.EntityFrameworkCore.Modeling;
 using YazilimAcademy.ABPRaffleApp.Domain.Participants;
 using YazilimAcademy.ABPRaffleApp.Domain.Shared;
+using YazilimAcademy.ABPRaffleApp.Raffles;
 
 namespace YazilimAcademy.ABPRaffleApp.EntityFrameworkCore.Configurations;
 
@@ -39,7 +40,7 @@ public sealed class ParticipantConfiguration : IEntityTypeConfiguration<Particip
         .IsRequired();
 
         builder.Property(x => x.FullName)
-        .HasMaxLength(150)
+        .HasMaxLength(ParticipantConsts.MaxFullNameLength)
         .IsRequired();
 
         builder.HasIndex(x => x.FullName);
@@ -50,7 +51,7 @@ public sealed class ParticipantConfiguration : IEntityTypeConfiguration<Particip
         .IsRequired();
 
         builder.Property(x => x.Email)
-        .HasMaxLength(150)
+        .HasMaxLength(ParticipantConsts.MaxEmailLength)
         .IsRequired();
 
         builder.HasIndex(x => x.Email)

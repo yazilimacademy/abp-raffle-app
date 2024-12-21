@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Volo.Abp.EntityFrameworkCore.Modeling;
 using YazilimAcademy.ABPRaffleApp.Domain.Raffles;
+using YazilimAcademy.ABPRaffleApp.Raffles;
 
 namespace YazilimAcademy.ABPRaffleApp.EntityFrameworkCore.Configurations;
 
@@ -14,11 +15,11 @@ public sealed class RaffleConfiguration : IEntityTypeConfiguration<Raffle>
             ABPRaffleAppConsts.DbSchema);
 
         builder.Property(x => x.Name)
-        .HasMaxLength(200)
+        .HasMaxLength(RaffleConsts.MaxNameLength)
         .IsRequired();
 
         builder.Property(x => x.Description)
-        .HasMaxLength(2500)
+        .HasMaxLength(RaffleConsts.MaxDescriptionLength)
         .IsRequired();
 
         builder.Property(x => x.StartDate)

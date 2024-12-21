@@ -16,7 +16,7 @@ namespace YazilimAcademy.ABPRaffleApp.Domain.Results
         public Participant Participant { get; set; }
 
         // Kazanan mı (Winner) yoksa yedek mi (Backup) olduğunu belirleyen alan
-        public bool IsBackup { get; set; }
+        public bool IsWinner { get; set; }
 
         // Eğer sıralamayı veya yedek sırasını tutmak isterseniz
         public int Order { get; set; }
@@ -29,12 +29,12 @@ namespace YazilimAcademy.ABPRaffleApp.Domain.Results
             // EF Core için parametresiz ctor
         }
 
-        public RaffleResult(Guid id, Guid raffleId, Guid participantId, bool isBackup = false, int order = 0)
+        public RaffleResult(Guid id, Guid raffleId, Guid participantId, bool isWinner = false, int order = 0)
             : base(id)
         {
             RaffleId = raffleId;
             ParticipantId = participantId;
-            IsBackup = isBackup;
+            IsWinner = isWinner;
             Order = order;
         }
     }

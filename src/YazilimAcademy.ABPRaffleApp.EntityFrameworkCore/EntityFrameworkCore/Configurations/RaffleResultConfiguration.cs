@@ -25,7 +25,7 @@ public sealed class RaffleResultConfiguration : IEntityTypeConfiguration<RaffleR
         .WithMany()
         .HasForeignKey(rr => rr.ParticipantId);
 
-        builder.Property(x => x.IsBackup)
+        builder.Property(x => x.IsWinner)
         .IsRequired();
 
         builder.Property(x => x.Order)
