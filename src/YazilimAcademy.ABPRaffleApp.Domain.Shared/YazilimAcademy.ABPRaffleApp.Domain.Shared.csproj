@@ -31,6 +31,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Volo.Abp.Core" Version="9.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
     <EmbeddedResource Include="Localization\ABPRaffleApp\*.json" />
     <Content Remove="Localization\ABPRaffleApp\*.json" />
   </ItemGroup>

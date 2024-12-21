@@ -9,11 +9,10 @@ public sealed class RaffleDto : AuditedEntityDto<Guid>
 
     public string Description { get; set; }
 
-    public DateTime StartDate { get; set; }
+    public DateTimeOffset StartDate { get; set; }
 
-    public DateTime EndDate { get; set; }
+    public DateTimeOffset EndDate { get; set; }
 
     public bool IsActive { get; set; }
-
     public int ParticipantCount { get; set; }
 }

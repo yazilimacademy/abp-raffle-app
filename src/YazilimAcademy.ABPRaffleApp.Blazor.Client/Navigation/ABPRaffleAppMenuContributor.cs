@@ -39,7 +39,7 @@ public class ABPRaffleAppMenuContributor : IMenuContributor
     private static async Task ConfigureMainMenuAsync(MenuConfigurationContext context)
     {
         var l = context.GetLocalizer<ABPRaffleAppResource>();
-        
+
         //Administration
         var administration = context.Menu.GetAdministration();
         administration.Order = 5;
@@ -74,7 +74,7 @@ public class ABPRaffleAppMenuContributor : IMenuContributor
 
         //Administration->Settings
         administration.SetSubItemOrder(SettingManagementMenus.GroupName, 7);
-    
+
         var bookStoreMenu = new ApplicationMenuItem(
             "BooksStore",
             l["Menu:Books"],
@@ -83,6 +83,14 @@ public class ABPRaffleAppMenuContributor : IMenuContributor
 
         context.Menu.AddItem(bookStoreMenu);
 
+        var rafflesMenu = new ApplicationMenuItem(
+            "Raffles",
+            l["Menu:Raffles"],
+            icon: "fa fa-gift"
+        );
+
+        context.Menu.AddItem(rafflesMenu);
+
         //CHECK the PERMISSION
         if (await context.IsGrantedAsync(ABPRaffleAppPermissions.Books.Default))
         {
@@ -90,6 +98,15 @@ public class ABPRaffleAppMenuContributor : IMenuContributor
                 "BooksStore.Books",
                 l["Menu:Books"],
                 url: "/books"
+            ));
+        }
+
+        if (await context.IsGrantedAsync(ABPRaffleAppPermissions.Raffles.Default))
+        {
+            rafflesMenu.AddItem(new ApplicationMenuItem(
+                "Raffles.Raffles",
+                l["Menu:Raffles"],
+                url: "/raffles"
             ));
         }
     }
@@ -116,10 +133,10 @@ public class ABPRaffleAppMenuContributor : IMenuContributor
             target: "_blank").RequireAuthenticated());
 
         context.Menu.AddItem(new ApplicationMenuItem(
-            "Account.Sessions", 
-            accountStringLocalizer["Sessions"], 
-            url: $"{authServerUrl.EnsureEndsWith('/')}Account/Sessions", 
-            icon: "fa fa-clock", 
+            "Account.Sessions",
+            accountStringLocalizer["Sessions"],
+            url: $"{authServerUrl.EnsureEndsWith('/')}Account/Sessions",
+            icon: "fa fa-clock",
             order: 1002,
             target: "_blank").RequireAuthenticated());
 

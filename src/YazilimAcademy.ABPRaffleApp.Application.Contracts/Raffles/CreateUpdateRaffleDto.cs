@@ -16,11 +16,11 @@ public sealed class CreateUpdateRaffleDto
 
     [Required]
     [DataType(DataType.DateTime)]
-    public DateTimeOffset StartDate { get; set; }
+    public DateTimeOffset StartDate { get; set; } = DateTimeOffset.UtcNow;
 
     [Required]
     [DataType(DataType.DateTime)]
-    public DateTimeOffset EndDate { get; set; }
+    public DateTimeOffset EndDate { get; set; } = DateTimeOffset.UtcNow.AddDays(7);
 
     [Required]
     public bool IsActive { get; set; }

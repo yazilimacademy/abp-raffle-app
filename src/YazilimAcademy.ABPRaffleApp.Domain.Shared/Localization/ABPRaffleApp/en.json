@@ -67,6 +67,19 @@
     "Permission:Books.Delete": "Deleting the books",
     "Menu:Home": "Home",
     "LongWelcomeMessage": "Welcome to the application. This is a startup project based on the ABP framework. For more information visit",
-    "Welcome": "Welcome"
+    "Welcome": "Welcome",
+    "Menu:Raffles": "Raffles",
+    "Permission:Raffles": "Raffle Management",
+    "Permission:Raffles.Create": "Creating new raffles",
+    "Permission:Raffles.Edit": "Editing the raffles",
+    "Permission:Raffles.Delete": "Deleting the raffles",
+    "Permission:Raffles.GetActiveRaffle": "Getting active raffles",
+    "NewRaffle": "New Raffle",
+    "Raffles": "Raffles",
+    "RaffleName": "Raffle Name",
+    "RaffleDescription": "Raffle Description",
+    "RaffleStartDate": "Raffle Start Date",
+    "RaffleEndDate": "Raffle End Date",
+    "RaffleParticipants": "Raffle Participants"
   }
 }

@@ -1,0 +1,202 @@
+﻿@page "/raffles"
+@attribute [Authorize(ABPRaffleAppPermissions.Raffles.Default)]
+@using YazilimAcademy.ABPRaffleApp.Permissions
+@using Microsoft.AspNetCore.Authorization
+@using Volo.Abp.Application.Dtos
+@using YazilimAcademy.ABPRaffleApp.Raffles
+@using YazilimAcademy.ABPRaffleApp.Localization
+@using Microsoft.Extensions.Localization
+@using Volo.Abp.AspNetCore.Components.Web
+@inject IStringLocalizer<ABPRaffleAppResource> L
+@inject AbpBlazorMessageLocalizerHelper<ABPRaffleAppResource> LH
+@inherits AbpCrudPageBase<IRaffleAppService, RaffleDto, Guid, PagedAndSortedResultRequestDto, CreateUpdateRaffleDto>
+
+<Card>
+    <CardHeader>
+        <Row Class="justify-content-between">
+            <Column ColumnSize="ColumnSize.IsAuto">
+                <h2>@L["Raffles"]</h2>
+            </Column>
+            <Column ColumnSize="ColumnSize.IsAuto">
+                @if (HasCreatePermission)
+                {
+                    <Button Color="Color.Primary" Clicked="OpenCreateModalAsync">
+                        @L["NewRaffle"]
+                    </Button>
+                }
+            </Column>
+        </Row>
+    </CardHeader>
+    <CardBody>
+        <DataGrid TItem="RaffleDto" Data="Entities" ReadData="OnDataGridReadAsync" CurrentPage="CurrentPage"
+            TotalItems="TotalCount" ShowPager="true" PageSize="PageSize">
+            <DataGridColumns>
+                <DataGridEntityActionsColumn TItem="RaffleDto" @ref="@EntityActionsColumn">
+                    <DisplayTemplate>
+                        <EntityActions TItem="RaffleDto" EntityActionsColumn="@EntityActionsColumn">
+                            <EntityAction TItem="RaffleDto" Text="@L["Edit"]" Visible=HasUpdatePermission
+                                Clicked="() => OpenEditModalAsync(context)" />
+                            <EntityAction TItem="RaffleDto" Text="@L["Delete"]" Visible=HasDeletePermission
+                                Clicked="() => DeleteEntityAsync(context)"
+                                ConfirmationMessage="()=>GetDeleteConfirmationMessage(context)" />
+                        </EntityActions>
+                    </DisplayTemplate>
+                </DataGridEntityActionsColumn>
+                <DataGridColumn TItem="RaffleDto" Field="@nameof(RaffleDto.Name)" Caption="@L["Name"]"></DataGridColumn>
+                <DataGridColumn TItem="RaffleDto" Field="@nameof(RaffleDto.Description)" Caption="@L["Description"]">
+                </DataGridColumn>
+                <DataGridColumn TItem="RaffleDto" Field="@nameof(RaffleDto.IsActive)" Caption="@L["IsActive"]">
+                    <DisplayTemplate>
+                        @(context.IsActive ? L["Yes"] : L["No"])
+                    </DisplayTemplate>
+                </DataGridColumn>
+                <DataGridColumn TItem="RaffleDto" Field="@nameof(RaffleDto.CreationTime)" Caption="@L["CreationTime"]">
+                    <DisplayTemplate>
+                        @context.CreationTime.ToLongDateString()
+                    </DisplayTemplate>
+                </DataGridColumn>
+            </DataGridColumns>
+        </DataGrid>
+    </CardBody>
+</Card>
+
+<Modal @ref="@CreateModal">
+    <ModalBackdrop />
+    <ModalContent IsCentered="true">
+        <Form>
+            <ModalHeader>
+                <ModalTitle>@L["NewRaffle"]</ModalTitle>
+                <CloseButton Clicked="CloseCreateModalAsync" />
+            </ModalHeader>
+            <ModalBody>
+                <Validations @ref="@CreateValidationsRef" Model="@NewEntity" ValidateOnLoad="false">
+                    <Validation MessageLocalizer="@LH.Localize">
+                        <Field>
+                            <FieldLabel>@L["Name"]</FieldLabel>
+                            <TextEdit @bind-Text="@NewEntity.Name">
+                                <Feedback>
+                                    <ValidationError />
+                                </Feedback>
+                            </TextEdit>
+                        </Field>
+                    </Validation>
+                    <Validation MessageLocalizer="@LH.Localize">
+                        <Field>
+                            <FieldLabel>@L["Description"]</FieldLabel>
+                            <TextEdit @bind-Text="@NewEntity.Description">
+                                <Feedback>
+                                    <ValidationError />
+                                </Feedback>
+                            </TextEdit>
+                        </Field>
+                    </Validation>
+                    <Validation MessageLocalizer="@LH.Localize">
+                        <Field>
+                            <FieldLabel>@L["StartDate"]</FieldLabel>
+                            <DateEdit TValue="DateTimeOffset" @bind-Date="@NewEntity.StartDate">
+                                <Feedback>
+                                    <ValidationError />
+                                </Feedback>
+                            </DateEdit>
+                        </Field>
+                    </Validation>
+                    <Validation MessageLocalizer="@LH.Localize">
+                        <Field>
+                            <FieldLabel>@L["EndDate"]</FieldLabel>
+                            <DateEdit TValue="DateTimeOffset" @bind-Date="@NewEntity.EndDate">
+                                <Feedback>
+                                    <ValidationError />
+                                </Feedback>
+                            </DateEdit>
+                        </Field>
+                    </Validation>
+                    <Field>
+                        <FieldLabel>@L["IsActive"]</FieldLabel>
+                        <Check TValue="bool" @bind-Checked="@NewEntity.IsActive" />
+                    </Field>
+                </Validations>
+            </ModalBody>
+            <ModalFooter>
+                <Button Color="Color.Secondary" Clicked="CloseCreateModalAsync">@L["Cancel"]</Button>
+                <Button Color="Color.Primary" Type="@ButtonType.Submit" PreventDefaultOnSubmit="true"
+                    Clicked="CreateEntityAsync">@L["Save"]</Button>
+            </ModalFooter>
+        </Form>
+    </ModalContent>
+</Modal>
+
+<Modal @ref="@EditModal">
+    <ModalBackdrop />
+    <ModalContent IsCentered="true">
+        <Form>
+            <ModalHeader>
+                <ModalTitle>@EditingEntity.Name</ModalTitle>
+                <CloseButton Clicked="CloseEditModalAsync" />
+            </ModalHeader>
+            <ModalBody>
+                <Validations @ref="@EditValidationsRef" Model="@EditingEntity" ValidateOnLoad="false">
+                    <Validation MessageLocalizer="@LH.Localize">
+                        <Field>
+                            <FieldLabel>@L["Name"]</FieldLabel>
+                            <TextEdit @bind-Text="@EditingEntity.Name">
+                                <Feedback>
+                                    <ValidationError />
+                                </Feedback>
+                            </TextEdit>
+                        </Field>
+                    </Validation>
+                    <Validation MessageLocalizer="@LH.Localize">
+                        <Field>
+                            <FieldLabel>@L["Description"]</FieldLabel>
+                            <TextEdit @bind-Text="@EditingEntity.Description">
+                                <Feedback>
+                                    <ValidationError />
+                                </Feedback>
+                            </TextEdit>
+                        </Field>
+                    </Validation>
+                    <Validation MessageLocalizer="@LH.Localize">
+                        <Field>
+                            <FieldLabel>@L["StartDate"]</FieldLabel>
+                            <DateEdit TValue="DateTimeOffset" @bind-Date="@EditingEntity.StartDate">
+                                <Feedback>
+                                    <ValidationError />
+                                </Feedback>
+                            </DateEdit>
+                        </Field>
+                    </Validation>
+                    <Validation MessageLocalizer="@LH.Localize">
+                        <Field>
+                            <FieldLabel>@L["EndDate"]</FieldLabel>
+                            <DateEdit TValue="DateTimeOffset" @bind-Date="@EditingEntity.EndDate">
+                                <Feedback>
+                                    <ValidationError />
+                                </Feedback>
+                            </DateEdit>
+                        </Field>
+                    </Validation>
+                    <Field>
+                        <FieldLabel>@L["IsActive"]</FieldLabel>
+                        <Check TValue="bool" @bind-Checked="@EditingEntity.IsActive" />
+                    </Field>
+                </Validations>
+            </ModalBody>
+            <ModalFooter>
+                <Button Color="Color.Secondary" Clicked="CloseEditModalAsync">@L["Cancel"]</Button>
+                <Button Color="Color.Primary" Type="@ButtonType.Submit" PreventDefaultOnSubmit="true"
+                    Clicked="UpdateEntityAsync">@L["Save"]</Button>
+            </ModalFooter>
+        </Form>
+    </ModalContent>
+</Modal>
+
+@code {
+    public Raffles() // Constructor
+    {
+        CreatePolicyName = ABPRaffleAppPermissions.Raffles.Create;
+        UpdatePolicyName = ABPRaffleAppPermissions.Raffles.Edit;
+        DeletePolicyName = ABPRaffleAppPermissions.Raffles.Delete;
+
+        LocalizationResource = typeof(ABPRaffleAppResource);
+    }
+}
