@@ -18,6 +18,11 @@ public class ABPRaffleAppPermissionDefinitionProvider : PermissionDefinitionProv
         booksPermission.AddChild(ABPRaffleAppPermissions.Books.Create, L("Permission:Books.Create"));
         booksPermission.AddChild(ABPRaffleAppPermissions.Books.Edit, L("Permission:Books.Edit"));
         booksPermission.AddChild(ABPRaffleAppPermissions.Books.Delete, L("Permission:Books.Delete"));
+
+        var rafflesPermission = myGroup.AddPermission(ABPRaffleAppPermissions.Raffles.Default, L("Permission:Raffles"));
+        rafflesPermission.AddChild(ABPRaffleAppPermissions.Raffles.Create, L("Permission:Raffles.Create"));
+        rafflesPermission.AddChild(ABPRaffleAppPermissions.Raffles.Edit, L("Permission:Raffles.Edit"));
+        rafflesPermission.AddChild(ABPRaffleAppPermissions.Raffles.Delete, L("Permission:Raffles.Delete"));
         //Define your own permissions here. Example:
         //myGroup.AddPermission(ABPRaffleAppPermissions.MyPermission1, L("Permission:MyPermission1"));
     }
