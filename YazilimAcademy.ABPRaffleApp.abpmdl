@@ -1,0 +1,117 @@
+{
+  "template": "app",
+  "imports": {
+    "Volo.Abp.LeptonXTheme": {
+      "version": "4.0.3",
+      "isInstalled": true
+    },
+    "Volo.Abp.LanguageManagement": {
+      "version": "9.0.2",
+      "isInstalled": true
+    },
+    "Volo.Abp.OpenIddict.Pro": {
+      "version": "9.0.2",
+      "isInstalled": true
+    },
+    "Volo.Abp.Gdpr": {
+      "version": "9.0.2",
+      "isInstalled": true
+    },
+    "Volo.Abp.AuditLogging.Pro": {
+      "version": "9.0.2",
+      "isInstalled": true
+    },
+    "Volo.Abp.Identity.Pro": {
+      "version": "9.0.2",
+      "isInstalled": true
+    },
+    "Volo.Abp.Account.Pro": {
+      "version": "9.0.2",
+      "isInstalled": true
+    },
+    "Volo.Abp.SettingManagement": {
+      "version": "9.0.2",
+      "isInstalled": true
+    },
+    "Volo.Abp.PermissionManagement": {
+      "version": "9.0.2",
+      "isInstalled": true
+    },
+    "Volo.Abp.FeatureManagement": {
+      "version": "9.0.2",
+      "isInstalled": true
+    }
+  },
+  "folders": {
+    "items": {
+      "src": {},
+      "test": {}
+    }
+  },
+  "packages": {
+    "YazilimAcademy.ABPRaffleApp.Application": {
+      "path": "src/YazilimAcademy.ABPRaffleApp.Application/YazilimAcademy.ABPRaffleApp.Application.abppkg",
+      "folder": "src"
+    },
+    "YazilimAcademy.ABPRaffleApp.Application.Tests": {
+      "path": "test/YazilimAcademy.ABPRaffleApp.Application.Tests/YazilimAcademy.ABPRaffleApp.Application.Tests.abppkg",
+      "folder": "test"
+    },
+    "YazilimAcademy.ABPRaffleApp.Domain.Shared": {
+      "path": "src/YazilimAcademy.ABPRaffleApp.Domain.Shared/YazilimAcademy.ABPRaffleApp.Domain.Shared.abppkg",
+      "folder": "src"
+    },
+    "YazilimAcademy.ABPRaffleApp.Application.Contracts": {
+      "path": "src/YazilimAcademy.ABPRaffleApp.Application.Contracts/YazilimAcademy.ABPRaffleApp.Application.Contracts.abppkg",
+      "folder": "src"
+    },
+    "YazilimAcademy.ABPRaffleApp.HttpApi": {
+      "path": "src/YazilimAcademy.ABPRaffleApp.HttpApi/YazilimAcademy.ABPRaffleApp.HttpApi.abppkg",
+      "folder": "src"
+    },
+    "YazilimAcademy.ABPRaffleApp.HttpApi.Client": {
+      "path": "src/YazilimAcademy.ABPRaffleApp.HttpApi.Client/YazilimAcademy.ABPRaffleApp.HttpApi.Client.abppkg",
+      "folder": "src"
+    },
+    "YazilimAcademy.ABPRaffleApp.EntityFrameworkCore.Tests": {
+      "path": "test/YazilimAcademy.ABPRaffleApp.EntityFrameworkCore.Tests/YazilimAcademy.ABPRaffleApp.EntityFrameworkCore.Tests.abppkg",
+      "folder": "test"
+    },
+    "YazilimAcademy.ABPRaffleApp.EntityFrameworkCore": {
+      "path": "src/YazilimAcademy.ABPRaffleApp.EntityFrameworkCore/YazilimAcademy.ABPRaffleApp.EntityFrameworkCore.abppkg",
+      "folder": "src"
+    },
+    "YazilimAcademy.ABPRaffleApp.TestBase": {
+      "path": "test/YazilimAcademy.ABPRaffleApp.TestBase/YazilimAcademy.ABPRaffleApp.TestBase.abppkg",
+      "folder": "test"
+    },
+    "YazilimAcademy.ABPRaffleApp.Domain.Tests": {
+      "path": "test/YazilimAcademy.ABPRaffleApp.Domain.Tests/YazilimAcademy.ABPRaffleApp.Domain.Tests.abppkg",
+      "folder": "test"
+    },
+    "YazilimAcademy.ABPRaffleApp.HttpApi.Client.ConsoleTestApp": {
+      "path": "test/YazilimAcademy.ABPRaffleApp.HttpApi.Client.ConsoleTestApp/YazilimAcademy.ABPRaffleApp.HttpApi.Client.ConsoleTestApp.abppkg",
+      "folder": "test"
+    },
+    "YazilimAcademy.ABPRaffleApp.DbMigrator": {
+      "path": "src/YazilimAcademy.ABPRaffleApp.DbMigrator/YazilimAcademy.ABPRaffleApp.DbMigrator.abppkg",
+      "folder": "src"
+    },
+    "YazilimAcademy.ABPRaffleApp.HttpApi.Host": {
+      "path": "src/YazilimAcademy.ABPRaffleApp.HttpApi.Host/YazilimAcademy.ABPRaffleApp.HttpApi.Host.abppkg",
+      "folder": "src"
+    },
+    "YazilimAcademy.ABPRaffleApp.Blazor": {
+      "path": "src/YazilimAcademy.ABPRaffleApp.Blazor/YazilimAcademy.ABPRaffleApp.Blazor.abppkg",
+      "folder": "src"
+    },
+    "YazilimAcademy.ABPRaffleApp.Blazor.Client": {
+      "path": "src/YazilimAcademy.ABPRaffleApp.Blazor.Client/YazilimAcademy.ABPRaffleApp.Blazor.Client.abppkg",
+      "folder": "src"
+    },
+    "YazilimAcademy.ABPRaffleApp.Domain": {
+      "path": "src/YazilimAcademy.ABPRaffleApp.Domain/YazilimAcademy.ABPRaffleApp.Domain.abppkg",
+      "folder": "src"
+    }
+  }
+}

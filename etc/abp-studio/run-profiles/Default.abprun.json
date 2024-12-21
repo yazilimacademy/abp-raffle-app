@@ -1,0 +1,22 @@
+﻿{
+  "applications": {
+    "YazilimAcademy.ABPRaffleApp.HttpApi.Host": {
+      "type": "dotnet-project",
+      "launchUrl": "https://localhost:44397",
+      "path": "../../../src/YazilimAcademy.ABPRaffleApp.HttpApi.Host/YazilimAcademy.ABPRaffleApp.HttpApi.Host.csproj",
+      "kubernetesService": ".*-httpapihost$",
+      "execution": {
+        "order": 4
+      }
+    },
+    "YazilimAcademy.ABPRaffleApp.Blazor": {
+      "type": "dotnet-project",
+      "launchUrl": "https://localhost:44312",
+      "path": "../../../src/YazilimAcademy.ABPRaffleApp.Blazor/YazilimAcademy.ABPRaffleApp.Blazor.csproj",
+      "kubernetesService": ".*-blazor$",
+      "execution": {
+        "order": 2
+      }
+    }
+  }
+}

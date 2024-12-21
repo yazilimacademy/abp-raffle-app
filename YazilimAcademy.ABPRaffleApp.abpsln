@@ -1,0 +1,46 @@
+{
+  "id": "c53f59a2-29df-42b1-ace4-9b26bf73fce0",
+  "template": "app",
+  "versions": {
+    "LeptonX": "4.0.3",
+    "AbpFramework": "9.0.2",
+    "AbpCommercial": "9.0.2",
+    "AbpStudio": "0.9.17",
+    "TargetDotnetFramework": "net9.0"
+  },
+  "modules": {
+    "YazilimAcademy.ABPRaffleApp": {
+      "path": "YazilimAcademy.ABPRaffleApp.abpmdl"
+    }
+  },
+  "runProfiles": {
+    "Default": {
+      "path": "etc/abp-studio/run-profiles/Default.abprun.json"
+    }
+  },
+  "options": {
+    "httpRequests": {
+      "ignoredUrls": [
+        "^/metrics$"
+      ]
+    }
+  },
+  "creatingStudioConfiguration": {
+    "template": "app",
+    "createdAbpStudioVersion": "0.9.17",
+    "tiered": "false",
+    "multiTenancy": "false",
+    "includeTests": "true",
+    "uiFramework": "blazor",
+    "databaseProvider": "ef",
+    "databaseManagementSystem": "postgresql",
+    "separateTenantSchema": "false",
+    "theme": "leptonx",
+    "themeStyle": "system",
+    "mobileFramework": "none",
+    "progressiveWebApp": "false",
+    "publicWebsite": "false",
+    "optionalModules": "GDPR LanguageManagement AuditLogging",
+    "socialLogin": ""
+  }
+}

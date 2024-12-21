@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <Import Project="..\..\common.props" />
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <RootNamespace>YazilimAcademy.ABPRaffleApp</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\YazilimAcademy.ABPRaffleApp.Domain\YazilimAcademy.ABPRaffleApp.Domain.csproj" />
+    <ProjectReference Include="..\YazilimAcademy.ABPRaffleApp.TestBase\YazilimAcademy.ABPRaffleApp.TestBase.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.11.1" />
+  </ItemGroup>
+
+</Project>

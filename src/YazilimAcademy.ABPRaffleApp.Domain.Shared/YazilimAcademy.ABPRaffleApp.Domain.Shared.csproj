@@ -1,0 +1,38 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <Import Project="..\..\common.props" />
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <RootNamespace>YazilimAcademy.ABPRaffleApp</RootNamespace>
+    <GenerateEmbeddedFilesManifest>true</GenerateEmbeddedFilesManifest>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Volo.Abp.BackgroundJobs.Domain.Shared" Version="9.0.2" />
+    <PackageReference Include="Volo.Abp.AuditLogging.Domain.Shared" Version="9.0.2" />
+    <PackageReference Include="Volo.Abp.FeatureManagement.Domain.Shared" Version="9.0.2" />
+    <PackageReference Include="Volo.Abp.PermissionManagement.Domain.Shared" Version="9.0.2" />
+    <PackageReference Include="Volo.Abp.SettingManagement.Domain.Shared" Version="9.0.2" />
+    <PackageReference Include="Volo.Abp.BlobStoring.Database.Domain.Shared" Version="9.0.2" />
+    <PackageReference Include="Volo.Abp.GlobalFeatures" Version="9.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Volo.Abp.OpenIddict.Pro.Domain.Shared" Version="9.0.2" />
+    <PackageReference Include="Volo.Abp.Identity.Pro.Domain.Shared" Version="9.0.2" />
+    <PackageReference Include="Volo.Abp.LanguageManagement.Domain.Shared" Version="9.0.2" />
+    <PackageReference Include="Volo.Abp.Gdpr.Domain.Shared" Version="9.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.FileProviders.Embedded" Version="9.0.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Localization\ABPRaffleApp\*.json" />
+    <Content Remove="Localization\ABPRaffleApp\*.json" />
+  </ItemGroup>
+
+</Project>
