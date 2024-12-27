@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace YazilimAcademy.ABPRaffleApp.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -503,6 +503,31 @@ namespace YazilimAcademy.ABPRaffleApp.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "AppRaffles",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Name = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
+                    Description = table.Column<string>(type: "character varying(2500)", maxLength: 2500, nullable: false),
+                    StartDate = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    EndDate = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    IsActive = table.Column<bool>(type: "boolean", nullable: false),
+                    ConcurrencyStamp = table.Column<string>(type: "character varying(40)", maxLength: 40, nullable: false),
+                    ExtraProperties = table.Column<string>(type: "text", nullable: false),
+                    CreationTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    CreatorId = table.Column<Guid>(type: "uuid", nullable: true),
+                    LastModificationTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
+                    LastModifierId = table.Column<Guid>(type: "uuid", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "boolean", nullable: false, defaultValue: false),
+                    DeleterId = table.Column<Guid>(type: "uuid", nullable: true),
+                    DeletionTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AppRaffles", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "GdprRequests",
                 columns: table => new
                 {
@@ -818,6 +843,34 @@ namespace YazilimAcademy.ABPRaffleApp.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "AppParticipants",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    RaffleId = table.Column<Guid>(type: "uuid", nullable: false),
+                    FullName = table.Column<string>(type: "character varying(150)", maxLength: 150, nullable: false),
+                    Email = table.Column<string>(type: "character varying(150)", maxLength: 150, nullable: false),
+                    ConcurrencyStamp = table.Column<string>(type: "character varying(40)", maxLength: 40, nullable: false),
+                    CreationTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    CreatorId = table.Column<Guid>(type: "uuid", nullable: true),
+                    LastModificationTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
+                    LastModifierId = table.Column<Guid>(type: "uuid", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "boolean", nullable: false, defaultValue: false),
+                    DeleterId = table.Column<Guid>(type: "uuid", nullable: true),
+                    DeletionTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AppParticipants", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AppParticipants_AppRaffles_RaffleId",
+                        column: x => x.RaffleId,
+                        principalTable: "AppRaffles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "GdprInfo",
                 columns: table => new
                 {
@@ -881,6 +934,55 @@ namespace YazilimAcademy.ABPRaffleApp.Migrations
                         name: "FK_AbpEntityPropertyChanges_AbpEntityChanges_EntityChangeId",
                         column: x => x.EntityChangeId,
                         principalTable: "AbpEntityChanges",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AppRaffleResults",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    RaffleId = table.Column<Guid>(type: "uuid", nullable: false),
+                    RaffleId1 = table.Column<Guid>(type: "uuid", nullable: false),
+                    ParticipantId = table.Column<Guid>(type: "uuid", nullable: false),
+                    ParticipantId1 = table.Column<Guid>(type: "uuid", nullable: false),
+                    IsWinner = table.Column<bool>(type: "boolean", nullable: false),
+                    Order = table.Column<int>(type: "integer", nullable: false),
+                    ConcurrencyStamp = table.Column<string>(type: "character varying(40)", maxLength: 40, nullable: false),
+                    CreationTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    CreatorId = table.Column<Guid>(type: "uuid", nullable: true),
+                    LastModificationTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
+                    LastModifierId = table.Column<Guid>(type: "uuid", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "boolean", nullable: false, defaultValue: false),
+                    DeleterId = table.Column<Guid>(type: "uuid", nullable: true),
+                    DeletionTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AppRaffleResults", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AppRaffleResults_AppParticipants_ParticipantId",
+                        column: x => x.ParticipantId,
+                        principalTable: "AppParticipants",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_AppRaffleResults_AppParticipants_ParticipantId1",
+                        column: x => x.ParticipantId1,
+                        principalTable: "AppParticipants",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_AppRaffleResults_AppRaffles_RaffleId",
+                        column: x => x.RaffleId,
+                        principalTable: "AppRaffles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_AppRaffleResults_AppRaffles_RaffleId1",
+                        column: x => x.RaffleId1,
+                        principalTable: "AppRaffles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -1161,6 +1263,41 @@ namespace YazilimAcademy.ABPRaffleApp.Migrations
                 column: "UserName");
 
             migrationBuilder.CreateIndex(
+                name: "IX_AppParticipants_Email",
+                table: "AppParticipants",
+                column: "Email");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AppParticipants_FullName",
+                table: "AppParticipants",
+                column: "FullName");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AppParticipants_RaffleId",
+                table: "AppParticipants",
+                column: "RaffleId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AppRaffleResults_ParticipantId",
+                table: "AppRaffleResults",
+                column: "ParticipantId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AppRaffleResults_ParticipantId1",
+                table: "AppRaffleResults",
+                column: "ParticipantId1");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AppRaffleResults_RaffleId",
+                table: "AppRaffleResults",
+                column: "RaffleId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AppRaffleResults_RaffleId1",
+                table: "AppRaffleResults",
+                column: "RaffleId1");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_GdprInfo_RequestId",
                 table: "GdprInfo",
                 column: "RequestId");
@@ -1292,6 +1429,9 @@ namespace YazilimAcademy.ABPRaffleApp.Migrations
                 name: "AppBooks");
 
             migrationBuilder.DropTable(
+                name: "AppRaffleResults");
+
+            migrationBuilder.DropTable(
                 name: "GdprInfo");
 
             migrationBuilder.DropTable(
@@ -1316,6 +1456,9 @@ namespace YazilimAcademy.ABPRaffleApp.Migrations
                 name: "AbpUsers");
 
             migrationBuilder.DropTable(
+                name: "AppParticipants");
+
+            migrationBuilder.DropTable(
                 name: "GdprRequests");
 
             migrationBuilder.DropTable(
@@ -1323,6 +1466,9 @@ namespace YazilimAcademy.ABPRaffleApp.Migrations
 
             migrationBuilder.DropTable(
                 name: "AbpAuditLogs");
+
+            migrationBuilder.DropTable(
+                name: "AppRaffles");
 
             migrationBuilder.DropTable(
                 name: "OpenIddictApplications");

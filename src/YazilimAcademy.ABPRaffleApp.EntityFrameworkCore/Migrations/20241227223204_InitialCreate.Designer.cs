@@ -13,8 +13,8 @@ using YazilimAcademy.ABPRaffleApp.EntityFrameworkCore;
 namespace YazilimAcademy.ABPRaffleApp.Migrations
 {
     [DbContext(typeof(ABPRaffleAppDbContext))]
-    [Migration("20241221134750_RaffleEntitiesCreated")]
-    partial class RaffleEntitiesCreated
+    [Migration("20241227223204_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -2142,8 +2142,7 @@ namespace YazilimAcademy.ABPRaffleApp.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Email")
-                        .IsUnique();
+                    b.HasIndex("Email");
 
                     b.HasIndex("FullName");
 

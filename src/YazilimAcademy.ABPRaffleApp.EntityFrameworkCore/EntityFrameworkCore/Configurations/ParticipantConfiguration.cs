@@ -54,7 +54,6 @@ public sealed class ParticipantConfiguration : IEntityTypeConfiguration<Particip
         .HasMaxLength(ParticipantConsts.MaxEmailLength)
         .IsRequired();
 
-        builder.HasIndex(x => x.Email)
-        .IsUnique();
+        builder.HasIndex(x => x.Email);
     }
 }

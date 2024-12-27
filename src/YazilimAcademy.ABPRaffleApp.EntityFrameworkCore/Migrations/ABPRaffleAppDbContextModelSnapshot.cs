@@ -2139,8 +2139,7 @@ namespace YazilimAcademy.ABPRaffleApp.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Email")
-                        .IsUnique();
+                    b.HasIndex("Email");
 
                     b.HasIndex("FullName");
 

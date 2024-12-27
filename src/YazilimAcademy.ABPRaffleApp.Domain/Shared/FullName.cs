@@ -7,10 +7,12 @@ namespace YazilimAcademy.ABPRaffleApp.Domain.Shared;
 
 public sealed record FullName
 {
-    private const string Pattern = @"^[a-zA-Z]+$";
+    // Yeni desen: Unicode harf (\p{L}) + diakritik (\p{M}), 
+    // ayrıca isteğe bağlı olarak `'` ve `-` işaretlerini de destekliyoruz.
+    // Örneğin "O'Connor", "Ahmet-Emre", vs. kabul etsin diye...
+    private const string Pattern = @"^[\p{L}\p{M}'-]+$";
     private const int MinLength = 2;
     private const int MaxLength = 100;
-    private object value;
 
     public string FirstName { get; init; }
     public IReadOnlyList<string> MiddleNames { get; init; } = Array.Empty<string>();
@@ -18,17 +20,23 @@ public sealed record FullName
 
     private FullName(string firstName, IEnumerable<string> middleNames, string lastName)
     {
-        // Validate each part
+        // Her bir kısım (FirstName, MiddleNames, LastName) regex + uzunluk kontrolünden geçer
         if (!IsValid(firstName))
-            throw new ArgumentException("Invalid first name.");
-
-        if (!IsValid(lastName))
-            throw new ArgumentException("Invalid last name.");
+        {
+            throw new ArgumentException($"Invalid first name: '{firstName}'.");
+        }
 
         foreach (var middleName in middleNames)
         {
             if (!IsValid(middleName))
-                throw new ArgumentException($"Invalid middle name '{middleName}'.");
+            {
+                throw new ArgumentException($"Invalid middle name: '{middleName}'.");
+            }
+        }
+
+        if (!IsValid(lastName))
+        {
+            throw new ArgumentException($"Invalid last name: '{lastName}'.");
         }
 
         FirstName = firstName;
@@ -38,38 +46,66 @@ public sealed record FullName
 
     public static bool IsValid(string value)
     {
-        return Regex.IsMatch(value, Pattern) && value.Length >= MinLength && value.Length <= MaxLength;
+        // Boş veya null ise geçersiz
+        if (string.IsNullOrWhiteSpace(value))
+        {
+            return false;
+        }
+
+        // Uzunluk kontrolü
+        if (value.Length < MinLength || value.Length > MaxLength)
+        {
+            return false;
+        }
+
+        // Regex kontrolü (ignore case)
+        return Regex.IsMatch(value, Pattern, RegexOptions.IgnoreCase | RegexOptions.Compiled);
     }
 
     public static FullName Create(string fullNameString)
     {
+        // En az 2 parça: (FirstName) + (LastName).
+        // Daha fazlası varsa middle name sayılıyor.
         var parts = fullNameString.Split(' ', StringSplitOptions.RemoveEmptyEntries);
 
         if (parts.Length < 2)
+        {
             throw new ArgumentException("Invalid full name format. Expected at least 'FirstName LastName'.");
+        }
 
-        // First name: first part
         var firstName = parts[0];
-
-        // Last name: last part
         var lastName = parts[^1];
-
-        // Middle names: all parts in between (if any)
         var middleNames = parts.Length > 2 ? parts[1..^1] : Array.Empty<string>();
 
         return new FullName(firstName, middleNames, lastName);
     }
 
-    public static implicit operator string(FullName fullName) => fullName.ToString();
-    public static implicit operator FullName(string value) => Create(value);
+    public static implicit operator string(FullName fullName)
+    {
+        return fullName.ToString();
+    }
 
-    public override string ToString() => MiddleNames.Count == 0
-        ? $"{FirstName} {LastName}"
-        : $"{FirstName} {string.Join(" ", MiddleNames)} {LastName}";
+    public static implicit operator FullName(string value)
+    {
+        return Create(value);
+    }
+
+    public override string ToString()
+    {
+        if (MiddleNames.Count == 0)
+        {
+            return $"{FirstName} {LastName}";
+        }
+        else
+        {
+            return $"{FirstName} {string.Join(" ", MiddleNames)} {LastName}";
+        }
+    }
 
     public string GetInitials()
     {
-        // Just use the first letter of first, middle(s), and last
+        // Örneğin "Ahmet Ayyildiz" => A.A.
+        // "Ali Mehmet Yıldız" => A.M.Y.
         var initials = new List<char> { FirstName[0] };
 
         foreach (var m in MiddleNames)

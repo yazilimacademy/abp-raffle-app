@@ -7,10 +7,11 @@ using Google.Apis.Drive.v3;
 using Google.Apis.Services;
 using File = Google.Apis.Drive.v3.Data.File;
 using Volo.Abp.DependencyInjection;
+using YazilimAcademy.ABPRaffleApp.GoogleDrive;
 
-namespace YazilimAcademy.ABPRaffleApp.Application.Google;
+namespace YazilimAcademy.ABPRaffleApp.Application.GoogleDrives;
 
-public class GoogleDriveAppService : ITransientDependency
+public class GoogleDriveAppService : IGoogleDriveAppService, ISingletonDependency
 {
     /// <summary>
     /// Drive API servisini oluşturur.
@@ -22,7 +23,7 @@ public class GoogleDriveAppService : ITransientDependency
         // 1) Credential yükle (service account veya user creds)
         // client_secret.json dosyasının konumu proje yapılandırmanıza göre değişebilir.
         var credential = GoogleCredential
-            .FromFile("client_secret.json")
+            .FromFile("C:\\Users\\alper\\Desktop\\orbital-lantern-443920-g2-0c500a9e7d1e.json")
             .CreateScoped(DriveService.Scope.DriveReadonly);
 
         // 2) DriveService örneği oluştur
@@ -65,22 +66,9 @@ public class GoogleDriveAppService : ITransientDependency
 
         // DTO (Data Transfer Object) oluşturup return edelim
         var spreadsheetList = files
-            .Select(file => new SpreadsheetDto
-            {
-                Id = file.Id,
-                Name = file.Name
-            })
+            .Select(file => new SpreadsheetDto(file.Id, file.Name))
             .ToList();
 
         return spreadsheetList;
     }
-}
-
-/// <summary>
-/// UI veya başka katmanlarda kullanmak üzere basit bir DTO
-/// </summary>
-public class SpreadsheetDto
-{
-    public string Id { get; set; }
-    public string Name { get; set; }
 }

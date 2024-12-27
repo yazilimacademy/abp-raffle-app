@@ -12,7 +12,7 @@ public sealed record Email
     public Email(string value)
     {
         if (!IsValid(value))
-            throw new ArgumentException("Invalid email address");
+            throw new ArgumentException($"Invalid email address. {value}");
 
         Value = value;
     }
@@ -22,7 +22,7 @@ public sealed record Email
         if (string.IsNullOrEmpty(value))
             return false;
 
-        if (!Regex.IsMatch(value, Pattern))
+        if (!Regex.IsMatch(value, Pattern, RegexOptions.IgnoreCase))
             return false;
 
         return true;

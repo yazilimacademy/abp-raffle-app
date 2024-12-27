@@ -15,6 +15,9 @@ public sealed class CreateUpdateRaffleDto
     public string Description { get; set; }
 
     [Required]
+    public string SpreadsheetId { get; set; }
+
+    [Required]
     [DataType(DataType.DateTime)]
     public DateTimeOffset StartDate { get; set; } = DateTimeOffset.UtcNow;
 

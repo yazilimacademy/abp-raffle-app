@@ -1,5 +1,6 @@
 ﻿@page "/raffles"
 @attribute [Authorize(ABPRaffleAppPermissions.Raffles.Default)]
+@using YazilimAcademy.ABPRaffleApp.GoogleDrive
 @using YazilimAcademy.ABPRaffleApp.Permissions
 @using Microsoft.AspNetCore.Authorization
 @using Volo.Abp.Application.Dtos
@@ -10,6 +11,7 @@
 @inject IStringLocalizer<ABPRaffleAppResource> L
 @inject AbpBlazorMessageLocalizerHelper<ABPRaffleAppResource> LH
 @inherits AbpCrudPageBase<IRaffleAppService, RaffleDto, Guid, PagedAndSortedResultRequestDto, CreateUpdateRaffleDto>
+@inject IGoogleDriveAppService GoogleDriveAppService;
 
 <Card>
     <CardHeader>
@@ -90,6 +92,20 @@
                             </TextEdit>
                         </Field>
                     </Validation>
+                    @if (!isLoading)
+                    {
+                        <Validation MessageLocalizer="@LH.Localize">
+                            <Field>
+                                <FieldLabel>@L["Spreadsheet"]</FieldLabel>
+                                <Select TValue="string" @bind-SelectedValue="@NewEntity.SpreadsheetId">
+                                    @foreach (var spreadsheet in spreadsheets)
+                                    {
+                                        <SelectItem Value="@spreadsheet.Id">@spreadsheet.Name</SelectItem>
+                                    }
+                                </Select>
+                            </Field>
+                        </Validation>
+                    }
                     <Validation MessageLocalizer="@LH.Localize">
                         <Field>
                             <FieldLabel>@L["StartDate"]</FieldLabel>
@@ -191,6 +207,8 @@
 </Modal>
 
 @code {
+    public bool isLoading = false;
+    private List<SpreadsheetDto> spreadsheets = new List<SpreadsheetDto>();
     public Raffles() // Constructor
     {
         CreatePolicyName = ABPRaffleAppPermissions.Raffles.Create;
@@ -198,5 +216,26 @@
         DeletePolicyName = ABPRaffleAppPermissions.Raffles.Delete;
 
         LocalizationResource = typeof(ABPRaffleAppResource);
+    }
+
+    protected override async Task OpenCreateModalAsync()
+    {
+        try
+        {
+            isLoading = true;
+
+            await base.OpenCreateModalAsync();
+
+            spreadsheets = await GoogleDriveAppService.GetAllSpreadsheetsAsync();
+
+            if (spreadsheets.Any())
+                NewEntity.SpreadsheetId = spreadsheets.First().Id;
+
+            isLoading = false;
+        }
+        catch (Exception ex)
+        {
+            isLoading = false;
+        }
     }
 }
