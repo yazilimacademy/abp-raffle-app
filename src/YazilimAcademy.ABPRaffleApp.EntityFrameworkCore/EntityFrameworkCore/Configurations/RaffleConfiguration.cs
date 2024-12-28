@@ -32,5 +32,7 @@ public sealed class RaffleConfiguration : IEntityTypeConfiguration<Raffle>
         .IsRequired();
 
         builder.ConfigureByConvention();
+
+
     }
 }

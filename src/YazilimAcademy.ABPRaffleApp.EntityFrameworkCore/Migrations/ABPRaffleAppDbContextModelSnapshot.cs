@@ -2270,24 +2270,14 @@ namespace YazilimAcademy.ABPRaffleApp.Migrations
                     b.Property<Guid>("ParticipantId")
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("ParticipantId1")
-                        .HasColumnType("uuid");
-
                     b.Property<Guid>("RaffleId")
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid>("RaffleId1")
                         .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ParticipantId");
 
-                    b.HasIndex("ParticipantId1");
-
                     b.HasIndex("RaffleId");
-
-                    b.HasIndex("RaffleId1");
 
                     b.ToTable("AppRaffleResults", (string)null);
                 });
@@ -2456,27 +2446,15 @@ namespace YazilimAcademy.ABPRaffleApp.Migrations
 
             modelBuilder.Entity("YazilimAcademy.ABPRaffleApp.Domain.Results.RaffleResult", b =>
                 {
-                    b.HasOne("YazilimAcademy.ABPRaffleApp.Domain.Participants.Participant", null)
+                    b.HasOne("YazilimAcademy.ABPRaffleApp.Domain.Participants.Participant", "Participant")
                         .WithMany()
                         .HasForeignKey("ParticipantId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("YazilimAcademy.ABPRaffleApp.Domain.Participants.Participant", "Participant")
-                        .WithMany()
-                        .HasForeignKey("ParticipantId1")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("YazilimAcademy.ABPRaffleApp.Domain.Raffles.Raffle", null)
-                        .WithMany()
-                        .HasForeignKey("RaffleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("YazilimAcademy.ABPRaffleApp.Domain.Raffles.Raffle", "Raffle")
-                        .WithMany()
-                        .HasForeignKey("RaffleId1")
+                        .WithMany("RaffleResults")
+                        .HasForeignKey("RaffleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -2528,6 +2506,8 @@ namespace YazilimAcademy.ABPRaffleApp.Migrations
             modelBuilder.Entity("YazilimAcademy.ABPRaffleApp.Domain.Raffles.Raffle", b =>
                 {
                     b.Navigation("Participants");
+
+                    b.Navigation("RaffleResults");
                 });
 #pragma warning restore 612, 618
         }

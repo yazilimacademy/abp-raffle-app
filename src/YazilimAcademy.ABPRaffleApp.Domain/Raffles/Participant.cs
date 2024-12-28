@@ -3,6 +3,9 @@ using Volo.Abp.Domain.Entities.Auditing;
 using Volo.Abp.Domain.Entities;
 using YazilimAcademy.ABPRaffleApp.Domain.Raffles;
 using YazilimAcademy.ABPRaffleApp.Domain.Shared;
+using System.Text.Json.Serialization;
+using YazilimAcademy.ABPRaffleApp.Domain.Results;
+using System.Collections.Generic;
 
 namespace YazilimAcademy.ABPRaffleApp.Domain.Participants
 {
@@ -10,6 +13,7 @@ namespace YazilimAcademy.ABPRaffleApp.Domain.Participants
     {
         // Foreign Key - Tek bir Raffle’a ait
         public Guid RaffleId { get; set; }
+        [JsonIgnore]
         public Raffle Raffle { get; set; }
 
         // Value Object

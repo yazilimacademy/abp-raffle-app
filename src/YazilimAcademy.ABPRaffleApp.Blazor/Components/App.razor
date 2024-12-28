@@ -8,10 +8,10 @@
     <base href="/" />
 
     <!--ABP:Styles-->
-    <link href="global.css?_v=638703855728365347" rel="stylesheet"/>
-    <link href="main.css" rel="stylesheet"/>
+    <link href="global.css?_v=638703855728365347" rel="stylesheet" />
+    <link href="main.css" rel="stylesheet" />
     <!--/ABP:Styles-->
-    <link href="YazilimAcademy.ABPRaffleApp.Blazor.Client.styles.css" rel="stylesheet"/>
+    <link href="YazilimAcademy.ABPRaffleApp.Blazor.Client.styles.css" rel="stylesheet" />
 
     <HeadOutlet @rendermode="new InteractiveWebAssemblyRenderMode(prerender: false)" />
 </head>
@@ -21,7 +21,7 @@
     <script src="_framework/blazor.web.js"></script>
 
     <div id="ApplicationContainer">
-        
+
         <!-- Loading Screen -->
         <div class="loader d-flex justify-content-center align-items-center">
             <div class="spinner-grow m-1" role="status">
@@ -35,8 +35,8 @@
             </div>
         </div>
         <!-- /Loading Screen -->
-        
-        <Routes @rendermode="new InteractiveWebAssemblyRenderMode(prerender: false)"/>
+
+        <Routes @rendermode="new InteractiveWebAssemblyRenderMode(prerender: false)" />
     </div>
 
     <div id="blazor-error-ui">
@@ -49,5 +49,10 @@
     <script src="global.js?_v=638703855729314206"></script>
     <!--/ABP:Scripts-->
 
+    <script src="confetti.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.4.0/dist/confetti.browser.min.js"></script>
+
+
 </body>
+
 </html>

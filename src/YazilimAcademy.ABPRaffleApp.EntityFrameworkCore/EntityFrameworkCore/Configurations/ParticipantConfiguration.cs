@@ -55,5 +55,10 @@ public sealed class ParticipantConfiguration : IEntityTypeConfiguration<Particip
         .IsRequired();
 
         builder.HasIndex(x => x.Email);
+
+        builder.HasOne(p => p.Raffle)
+        .WithMany(r => r.Participants)
+        .HasForeignKey(p => p.RaffleId)
+        .OnDelete(DeleteBehavior.Cascade);
     }
 }

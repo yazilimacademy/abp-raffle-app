@@ -46,6 +46,10 @@ using Volo.Abp.Security.Claims;
 using Volo.Abp.Account.Public.Web.ExternalProviders;
 using Volo.Abp.Account.Public.Web;
 using Volo.Abp.Account.Public.Web.Impersonation;
+using Volo.Abp.Json;
+using Volo.Abp.Json.SystemTextJson;
+using System.Text.Json.Serialization;
+using System.Text.Json;
 
 namespace YazilimAcademy.ABPRaffleApp;
 
@@ -111,12 +115,22 @@ public class ABPRaffleAppHttpApiHostModule : AbpModule
             {
                 options.DisableTransportSecurityRequirement = true;
             });
-            
+
             Configure<ForwardedHeadersOptions>(options =>
             {
                 options.ForwardedHeaders = ForwardedHeaders.XForwardedProto;
             });
         }
+
+        // Configure<AbpSystemTextJsonSerializerOptions>(options =>
+        // {
+        //     options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+        // });
+
+        // Configure<JsonSerializerOptions>(options =>
+        // {
+        //     options.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+        // });
 
         ConfigureAuthentication(context);
         ConfigureUrls(configuration);
@@ -130,7 +144,7 @@ public class ABPRaffleAppHttpApiHostModule : AbpModule
         ConfigureCors(context, configuration);
         ConfigureTheme();
     }
-    
+
     private void ConfigureTheme()
     {
         Configure<LeptonXThemeOptions>(options =>
@@ -211,6 +225,7 @@ public class ABPRaffleAppHttpApiHostModule : AbpModule
             });
     }
 
+
     private void ConfigureCors(ServiceConfigurationContext context, IConfiguration configuration)
     {
         context.Services.AddCors(options =>
@@ -232,7 +247,7 @@ public class ABPRaffleAppHttpApiHostModule : AbpModule
             });
         });
     }
-    
+
     private void ConfigureExternalProviders(ServiceConfigurationContext context)
     {
         context.Services.AddAuthentication()
@@ -313,7 +328,7 @@ public class ABPRaffleAppHttpApiHostModule : AbpModule
         {
             app.UseErrorPage();
         }
-        
+
         app.MapAbpStaticAssets();
         app.UseAbpStudioLink();
         app.UseRouting();

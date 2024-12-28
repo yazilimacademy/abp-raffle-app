@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace YazilimAcademy.ABPRaffleApp.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class InitialCreateX : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -944,9 +944,7 @@ namespace YazilimAcademy.ABPRaffleApp.Migrations
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     RaffleId = table.Column<Guid>(type: "uuid", nullable: false),
-                    RaffleId1 = table.Column<Guid>(type: "uuid", nullable: false),
                     ParticipantId = table.Column<Guid>(type: "uuid", nullable: false),
-                    ParticipantId1 = table.Column<Guid>(type: "uuid", nullable: false),
                     IsWinner = table.Column<bool>(type: "boolean", nullable: false),
                     Order = table.Column<int>(type: "integer", nullable: false),
                     ConcurrencyStamp = table.Column<string>(type: "character varying(40)", maxLength: 40, nullable: false),
@@ -968,20 +966,8 @@ namespace YazilimAcademy.ABPRaffleApp.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_AppRaffleResults_AppParticipants_ParticipantId1",
-                        column: x => x.ParticipantId1,
-                        principalTable: "AppParticipants",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
                         name: "FK_AppRaffleResults_AppRaffles_RaffleId",
                         column: x => x.RaffleId,
-                        principalTable: "AppRaffles",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_AppRaffleResults_AppRaffles_RaffleId1",
-                        column: x => x.RaffleId1,
                         principalTable: "AppRaffles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -1283,19 +1269,9 @@ namespace YazilimAcademy.ABPRaffleApp.Migrations
                 column: "ParticipantId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AppRaffleResults_ParticipantId1",
-                table: "AppRaffleResults",
-                column: "ParticipantId1");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_AppRaffleResults_RaffleId",
                 table: "AppRaffleResults",
                 column: "RaffleId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_AppRaffleResults_RaffleId1",
-                table: "AppRaffleResults",
-                column: "RaffleId1");
 
             migrationBuilder.CreateIndex(
                 name: "IX_GdprInfo_RequestId",

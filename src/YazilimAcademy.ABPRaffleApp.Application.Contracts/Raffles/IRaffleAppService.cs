@@ -13,4 +13,5 @@ public interface IRaffleAppService :
         CreateUpdateRaffleDto> //Used to create/update a book
 {
     Task<PagedResultDto<RaffleDto>> GetActiveRaffleAsync(PagedAndSortedResultRequestDto input);
+    Task<DrawResultDto> DrawAsync(Guid raffleId, int winnerCount = 3, int backupCount = 3);
 }

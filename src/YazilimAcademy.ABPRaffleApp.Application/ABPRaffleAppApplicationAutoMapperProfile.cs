@@ -19,8 +19,7 @@ public class ABPRaffleAppApplicationAutoMapperProfile : Profile
         CreateMap<RaffleDto, CreateUpdateRaffleDto>();
 
         CreateMap<Participant, ParticipantDto>()
-            .ForMember(dest => dest.FirstName, opt => opt.MapFrom(src => src.FullName.FirstName))
-            .ForMember(dest => dest.LastName, opt => opt.MapFrom(src => src.FullName.LastName));
+            .ForMember(dest => dest.FullName, opt => opt.MapFrom(src => src.FullName));
 
         CreateMap<CreateUpdateParticipantDto, FullName>()
             .ConstructUsing(src => FullName.Create($"{src.FirstName} {src.LastName}"));

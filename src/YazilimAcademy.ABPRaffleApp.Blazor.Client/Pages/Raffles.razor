@@ -11,7 +11,9 @@
 @inject IStringLocalizer<ABPRaffleAppResource> L
 @inject AbpBlazorMessageLocalizerHelper<ABPRaffleAppResource> LH
 @inherits AbpCrudPageBase<IRaffleAppService, RaffleDto, Guid, PagedAndSortedResultRequestDto, CreateUpdateRaffleDto>
-@inject IGoogleDriveAppService GoogleDriveAppService;
+@inject IGoogleDriveAppService GoogleDriveAppService
+@inject IJSRuntime JS
+@inject IRaffleAppService RaffleAppService
 
 <Card>
     <CardHeader>
@@ -41,6 +43,8 @@
                             <EntityAction TItem="RaffleDto" Text="@L["Delete"]" Visible=HasDeletePermission
                                 Clicked="() => DeleteEntityAsync(context)"
                                 ConfirmationMessage="()=>GetDeleteConfirmationMessage(context)" />
+                            <EntityAction TItem="RaffleDto" Text="@L["Draw"]"
+                                Clicked="() => HandleDrawAsync(context)" />
                         </EntityActions>
                     </DisplayTemplate>
                 </DataGridEntityActionsColumn>
@@ -206,7 +210,45 @@
     </ModalContent>
 </Modal>
 
+<Modal @ref="DrawResultsModal" Size="ModalSize.Large" IsCentered="true">
+    <ModalBackdrop />
+    <ModalContent>
+        <ModalHeader>
+            <ModalTitle>Winners & Backups</ModalTitle>
+            <CloseButton Clicked="CloseResultsModalAsync" />
+        </ModalHeader>
+        <ModalBody>
+            <h3>Winners</h3>
+            <ul>
+                @if (LastDrawResult?.Winners != null)
+                {
+                    @foreach (var w in LastDrawResult.Winners)
+                    {
+                        <li>@w.FullName (@w.Email)</li>
+                    }
+                }
+            </ul>
+            <h3>Backup Winners</h3>
+            <ul>
+                @if (LastDrawResult?.Backups != null)
+                {
+                    @foreach (var b in LastDrawResult.Backups)
+                    {
+                        <li>@b.FullName (@b.Email)</li>
+                    }
+                }
+            </ul>
+        </ModalBody>
+        <ModalFooter>
+            <Button Color="Color.Secondary" Clicked="CloseResultsModalAsync">Close</Button>
+        </ModalFooter>
+    </ModalContent>
+</Modal>
+
+
 @code {
+    private Modal DrawResultsModal;
+    private DrawResultDto LastDrawResult;
     public bool isLoading = false;
     private List<SpreadsheetDto> spreadsheets = new List<SpreadsheetDto>();
     public Raffles() // Constructor
@@ -237,5 +279,26 @@
         {
             isLoading = false;
         }
+    }
+
+    private async Task HandleDrawAsync(RaffleDto raffle)
+    {
+        // 1) Call your new RaffleAppService.DrawAsync method
+        var drawResult = await RaffleAppService.DrawAsync(raffle.Id, 3, 3);
+
+        // 2) Store it in a local variable
+        LastDrawResult = drawResult;
+
+        // 3) Show the results in the modal
+        await DrawResultsModal.Show();
+
+        // 4) Trigger confetti (optional)
+        // We'll define a JS function "startConfetti()" for a confetti library
+        await JS.InvokeVoidAsync("startConfetti");
+    }
+
+    private async Task CloseResultsModalAsync()
+    {
+        await DrawResultsModal.Hide();
     }
 }

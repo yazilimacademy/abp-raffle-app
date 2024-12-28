@@ -5,6 +5,7 @@ using Volo.Abp.Domain.Entities.Auditing;
 using Volo.Abp.Domain.Entities;
 using YazilimAcademy.ABPRaffleApp.Domain.Participants;
 using YazilimAcademy.ABPRaffleApp.Domain.Shared;
+using YazilimAcademy.ABPRaffleApp.Domain.Results;
 
 namespace YazilimAcademy.ABPRaffleApp.Domain.Raffles
 {
@@ -24,6 +25,9 @@ namespace YazilimAcademy.ABPRaffleApp.Domain.Raffles
 
         // 1 -> N Relationship: Bir Raffle'ın birden çok Participant'ı
         public ICollection<Participant> Participants { get; private set; }
+
+        // 1 -> N Relationship: Bir Raffle'ın birden çok RaffleResult'ı
+        public ICollection<RaffleResult> RaffleResults { get; private set; }
 
         // EF Core'un ihtiyacı için korumalı ctor
         protected Raffle()
