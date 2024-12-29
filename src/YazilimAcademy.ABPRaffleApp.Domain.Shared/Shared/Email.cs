@@ -17,6 +17,12 @@ public sealed record Email
         Value = value;
     }
 
+
+    public Email()
+    {
+        // EF Core parametresiz ctor
+    }
+
     private static bool IsValid(string value)
     {
         if (string.IsNullOrEmpty(value))

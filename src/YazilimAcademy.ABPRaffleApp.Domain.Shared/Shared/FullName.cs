@@ -90,6 +90,11 @@ public sealed record FullName
         return Create(value);
     }
 
+    public FullName()
+    {
+
+    }
+
     public override string ToString()
     {
         if (MiddleNames.Count == 0)

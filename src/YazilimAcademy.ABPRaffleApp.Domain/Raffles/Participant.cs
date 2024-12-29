@@ -24,6 +24,8 @@ namespace YazilimAcademy.ABPRaffleApp.Domain.Participants
 
         // Concurrency 
         public string ConcurrencyStamp { get; set; }
+        [JsonIgnore]
+        public ICollection<RaffleResult> RaffleResults { get; set; } = new List<RaffleResult>();
 
         protected Participant()
         {

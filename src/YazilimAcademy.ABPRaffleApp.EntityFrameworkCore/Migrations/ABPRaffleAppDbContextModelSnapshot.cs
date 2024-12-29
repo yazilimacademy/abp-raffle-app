@@ -2447,7 +2447,7 @@ namespace YazilimAcademy.ABPRaffleApp.Migrations
             modelBuilder.Entity("YazilimAcademy.ABPRaffleApp.Domain.Results.RaffleResult", b =>
                 {
                     b.HasOne("YazilimAcademy.ABPRaffleApp.Domain.Participants.Participant", "Participant")
-                        .WithMany()
+                        .WithMany("RaffleResults")
                         .HasForeignKey("ParticipantId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -2501,6 +2501,11 @@ namespace YazilimAcademy.ABPRaffleApp.Migrations
             modelBuilder.Entity("Volo.Abp.Identity.OrganizationUnit", b =>
                 {
                     b.Navigation("Roles");
+                });
+
+            modelBuilder.Entity("YazilimAcademy.ABPRaffleApp.Domain.Participants.Participant", b =>
+                {
+                    b.Navigation("RaffleResults");
                 });
 
             modelBuilder.Entity("YazilimAcademy.ABPRaffleApp.Domain.Raffles.Raffle", b =>
